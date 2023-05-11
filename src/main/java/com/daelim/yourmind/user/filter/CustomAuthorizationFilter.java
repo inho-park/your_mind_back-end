@@ -1,4 +1,4 @@
-package com.daelim.yourmind.filter;
+package com.daelim.yourmind.user.filter;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
