@@ -1,9 +1,9 @@
-package com.daelim.yourmind.service;
+package com.daelim.yourmind.user.service;
 
-import com.example.userservice.domain.Role;
-import com.example.userservice.domain.RoleRepository;
-import com.example.userservice.domain.User;
-import com.example.userservice.domain.UserRepository;
+import com.daelim.yourmind.user.domain.Role;
+import com.daelim.yourmind.user.domain.RoleRepository;
+import com.daelim.yourmind.user.domain.User;
+import com.daelim.yourmind.user.domain.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -52,6 +52,8 @@ public class UserServiceImpl implements UserService, UserDetailsService {
                 .name(user.getName())
                 .username(user.getUsername())
                 .password(passwordEncoder.encode(user.getPassword()))
+                .message(user.getMessage())
+                .age(user.getAge())
                 .roles(user.getRoles())
                 .build();
         return userRepository.save(user);

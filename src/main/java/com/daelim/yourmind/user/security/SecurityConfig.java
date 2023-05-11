@@ -1,7 +1,7 @@
-package com.daelim.yourmind.security;
+package com.daelim.yourmind.user.security;
 
-import com.example.userservice.filter.CustomAuthenticationFilter;
-import com.example.userservice.filter.CustomAuthorizationFilter;
+import com.daelim.yourmind.user.filter.CustomAuthenticationFilter;
+import com.daelim.yourmind.user.filter.CustomAuthorizationFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

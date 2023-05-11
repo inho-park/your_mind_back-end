@@ -1,4 +1,4 @@
-package com.daelim.yourmind.domain;
+package com.daelim.yourmind.user.domain;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

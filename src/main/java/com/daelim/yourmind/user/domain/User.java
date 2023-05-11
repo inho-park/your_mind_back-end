@@ -1,4 +1,4 @@
-package com.daelim.yourmind.domain;
+package com.daelim.yourmind.user.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -19,11 +19,22 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false)
     private String name;
 
+    @Column(nullable = false)
     private String username;
 
+    @Column(nullable = false)
     private String password;
+
+    @Column
+    private String message;
+
+    @Column
+    private Long age;
+
+    @Column
 
     @ManyToMany(fetch = FetchType.EAGER)
     private Collection<Role> roles = new ArrayList<>();

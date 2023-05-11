@@ -1,12 +1,12 @@
-package com.daelim.yourmind.api;
+package com.daelim.yourmind.user.api;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
-import com.example.userservice.domain.Role;
-import com.example.userservice.domain.User;
-import com.example.userservice.service.UserService;
+import com.daelim.yourmind.user.domain.Role;
+import com.daelim.yourmind.user.domain.User;
+import com.daelim.yourmind.user.service.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
@@ -54,7 +54,7 @@ public class UserResource {
     }
 
     @PostMapping("/role/addtouser")
-    public ResponseEntity<?> addRoleToUser(@RequestBody RoleTOUserForm form) {
+    public ResponseEntity<?> addRoleToUser(@RequestBody RoleToUserForm form) {
         userService.addRoleToUser(form.getUsername(), form.getRolename());
         return ResponseEntity.ok().build();
     }
@@ -106,7 +106,7 @@ public class UserResource {
     }
 
     @Data
-    class RoleTOUserForm {
+    class RoleToUserForm {
         private String username;
         private String rolename;
     }

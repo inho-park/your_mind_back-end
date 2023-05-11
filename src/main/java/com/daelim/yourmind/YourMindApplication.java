@@ -1,13 +1,52 @@
 package com.daelim.yourmind;
 
+import com.daelim.yourmind.user.domain.Role;
+import com.daelim.yourmind.user.domain.User;
+import com.daelim.yourmind.user.service.UserService;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+
+import java.util.ArrayList;
 
 @SpringBootApplication
 public class YourMindApplication {
-
+    @Bean
+    PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
     public static void main(String[] args) {
         SpringApplication.run(YourMindApplication.class, args);
     }
 
+    CommandLineRunner run(UserService userService) {
+
+        return args -> {
+            userService.saveRole(new Role(null, "ROLE_USER"));
+            userService.saveRole(new Role(null, "ROLE_MANAGER"));
+            userService.saveRole(new Role(null, "ROLE_ADMIN"));
+            userService.saveRole(new Role(null, "ROLE_SUPER_ADMIN"));
+
+            userService.saveUser(new User(null, "nameA", "usernameA", "passwordA", "messageA", 1l, new ArrayList<>()));
+            userService.saveUser(new User(null, "nameB", "usernameB", "passwordB", "messageB", 2l, new ArrayList<>()));
+            userService.saveUser(new User(null, "nameC", "usernameC", "passwordC", "messageC", 3l, new ArrayList<>()));
+            userService.saveUser(new User(null, "nameD", "usernameD", "passwordD", "messageD", 4l, new ArrayList<>()));
+
+            userService.addRoleToUser("nameA", "ROLE_USER");
+
+            userService.addRoleToUser("nameB", "ROLE_USER");
+            userService.addRoleToUser("nameB", "ROLE_MANAGER");
+
+            userService.addRoleToUser("nameC", "ROLE_MANAGER");
+            userService.addRoleToUser("nameC", "ROLE_ADMIN");
+
+            userService.addRoleToUser("nameD", "ROLE_USER");
+            userService.addRoleToUser("nameD", "ROLE_MANAGER");
+            userService.addRoleToUser("nameD", "ROLE_ADMIN");
+            userService.addRoleToUser("nameD", "ROLE_SUPER_ADMIN");
+        };
+    }
 }

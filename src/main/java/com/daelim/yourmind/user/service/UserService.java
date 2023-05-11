@@ -1,7 +1,9 @@
-package com.daelim.yourmind.service;
+package com.daelim.yourmind.user.service;
 
-import com.example.userservice.domain.Role;
-import com.example.userservice.domain.User;
+
+
+import com.daelim.yourmind.user.domain.Role;
+import com.daelim.yourmind.user.domain.User;
 
 import java.util.List;
 
