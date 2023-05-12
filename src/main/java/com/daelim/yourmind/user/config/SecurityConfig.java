@@ -1,4 +1,4 @@
-package com.daelim.yourmind.user.security;
+package com.daelim.yourmind.user.config;
 
 import com.daelim.yourmind.user.filter.CustomAuthenticationFilter;
 import com.daelim.yourmind.user.filter.CustomAuthorizationFilter;
