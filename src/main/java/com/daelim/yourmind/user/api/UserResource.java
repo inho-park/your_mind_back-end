@@ -11,10 +11,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -34,6 +36,9 @@ import java.util.stream.Collectors;
 @RequestMapping("/api")
 public class UserResource {
     private final UserService userService;
+
+    @Value("${SECRET_KEY}")
+    private String SECRET_KEY;
     
     @GetMapping("/users")
     public ResponseEntity<List<User>> getUsers() {
@@ -67,7 +72,7 @@ public class UserResource {
                 // local 에서 사용할 GrantType 으로 가정하여 Bearer 만 받음
                 String refresh_token = authorizationHeader.substring("Bearer ".length());
                 // token 을 생성할 때 사용한 알고리즘과 일치
-                Algorithm algorithm = Algorithm.HMAC256("secret".getBytes());
+                Algorithm algorithm = Algorithm.HMAC256(SECRET_KEY.getBytes());
                 // 토큰 검증 객체를 생성한 후 알고리즘 주기
                 JWTVerifier verifier = JWT.require(algorithm).build();
                 // 토큰 검증 객체에서 검증된 복호화된 토큰 변수 지정

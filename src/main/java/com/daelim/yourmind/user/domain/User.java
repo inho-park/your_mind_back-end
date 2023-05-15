@@ -1,5 +1,7 @@
 package com.daelim.yourmind.user.domain;
 
+import com.daelim.yourmind.common.domain.BaseTimeEntity;
+import com.daelim.yourmind.common.domain.BooleanToYNConverter;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -14,7 +16,7 @@ import java.util.Collection;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class User {
+public class User extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -32,9 +34,11 @@ public class User {
     private String message;
 
     @Column
-    private Long age;
+    private int age;
 
     @Column
+    @Convert(converter = BooleanToYNConverter.class)
+    private boolean isCounselor;
 
     @ManyToMany(fetch = FetchType.EAGER)
     private Collection<Role> roles = new ArrayList<>();

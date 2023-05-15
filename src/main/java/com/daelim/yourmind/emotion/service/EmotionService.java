@@ -1,11 +1,52 @@
 package com.daelim.yourmind.emotion.service;
 
 import com.daelim.yourmind.emotion.domain.Emotion;
+import com.daelim.yourmind.emotion.dto.EmotionDTO;
+import com.daelim.yourmind.emotion.dto.PageRequestDTO;
+import com.daelim.yourmind.emotion.dto.PageResultDTO;
+import com.daelim.yourmind.user.domain.User;
 
 import java.util.List;
 
 public interface EmotionService {
     Emotion saveEmotion(Emotion emotion);
     Emotion getEmotion(Long childId);
-    List<Emotion> getEmotions();
+    PageResultDTO<EmotionDTO, Object[]> getEmotions(PageRequestDTO pageRequestDTO);
+
+    default Emotion dtoToEntity(EmotionDTO dto) {
+        User child  = User.builder().username(dto.getChild()).build();
+        User counselor = User.builder().username(dto.getCounselor()).build();
+        Emotion emotion = Emotion.builder()
+                .id(dto.getId())
+                .angry(dto.getAngry())
+                .disgusted(dto.getDisgusted())
+                .fearful(dto.getFearful())
+                .happy(dto.getHappy())
+                .neutral(dto.getNeutral())
+                .surprised(dto.getSurprised())
+                .sad(dto.getSad())
+                .child(child)
+                .counselor(counselor)
+                .build();
+        return emotion;
+    }
+
+    default EmotionDTO entityToDTO(Emotion emotion, User child, User counselor) {
+        EmotionDTO emotionDTO = EmotionDTO.builder()
+                .id(emotion.getId())
+                .angry(emotion.getAngry())
+                .neutral(emotion.getNeutral())
+                .fearful(emotion.getFearful())
+                .sad(emotion.getSad())
+                .disgusted(emotion.getDisgusted())
+                .surprised(emotion.getSurprised())
+                .happy(emotion.getHappy())
+                .regDate(emotion.getRegDate())
+                .modDate(emotion.getModDate())
+                .child(child.getUsername())
+                .counselor(counselor.getUsername())
+                .build();
+
+        return emotionDTO;
+    }
 }

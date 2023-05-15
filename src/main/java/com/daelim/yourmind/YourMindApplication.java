@@ -33,10 +33,10 @@ public class YourMindApplication {
             userService.saveRole(new Role(null, "ROLE_ADMIN"));
             userService.saveRole(new Role(null, "ROLE_SUPER_ADMIN"));
 
-            userService.saveUser(new User(null, "nameA", "usernameA", "passwordA", "messageA", 1l, new ArrayList<>()));
-            userService.saveUser(new User(null, "nameB", "usernameB", "passwordB", "messageB", 2l, new ArrayList<>()));
-            userService.saveUser(new User(null, "nameC", "usernameC", "passwordC", "messageC", 3l, new ArrayList<>()));
-            userService.saveUser(new User(null, "nameD", "usernameD", "passwordD", "messageD", 4l, new ArrayList<>()));
+            userService.saveUser(new User(null, "nameA", "usernameA", "passwordA", "messageA", 1, true, new ArrayList<>()));
+            userService.saveUser(new User(null, "nameB", "usernameB", "passwordB", "messageB", 2, true, new ArrayList<>()));
+            userService.saveUser(new User(null, "nameC", "usernameC", "passwordC", "messageC", 3, false, new ArrayList<>()));
+            userService.saveUser(new User(null, "nameD", "usernameD", "passwordD", "messageD", 4, false, new ArrayList<>()));
 
             userService.addRoleToUser("nameA", "ROLE_USER");
 

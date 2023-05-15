@@ -1,5 +1,6 @@
 package com.daelim.yourmind.emotion.domain;
 
+import com.daelim.yourmind.common.domain.BaseTimeEntity;
 import com.daelim.yourmind.user.domain.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -13,33 +14,36 @@ import javax.persistence.*;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Emotion {
+public class Emotion extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(nullable = false)
-    private Long Angry;
+    private Long angry;
 
     @Column(nullable = false)
-    private Long Disgusted;
+    private Long disgusted;
 
     @Column(nullable = false)
-    private Long Fearful;
+    private Long fearful;
 
     @Column(nullable = false)
-    private Long Happy;
+    private Long happy;
 
     @Column(nullable = false)
-    private Long Neutral;
+    private Long neutral;
 
     @Column(nullable = false)
-    private Long Sad;
+    private Long sad;
 
     @Column(nullable = false)
-    private Long Surprised;
+    private Long surprised;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private User child;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    private User counselor;
 }
