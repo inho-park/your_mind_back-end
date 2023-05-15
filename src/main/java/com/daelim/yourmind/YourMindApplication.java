@@ -25,8 +25,8 @@ public class YourMindApplication {
         SpringApplication.run(YourMindApplication.class, args);
     }
 
+    @Bean
     CommandLineRunner run(UserService userService) {
-
         return args -> {
             userService.saveRole(new Role(null, "ROLE_USER"));
             userService.saveRole(new Role(null, "ROLE_MANAGER"));
@@ -38,18 +38,18 @@ public class YourMindApplication {
             userService.saveUser(new User(null, "nameC", "usernameC", "passwordC", "messageC", 3, false, new ArrayList<>()));
             userService.saveUser(new User(null, "nameD", "usernameD", "passwordD", "messageD", 4, false, new ArrayList<>()));
 
-            userService.addRoleToUser("nameA", "ROLE_USER");
+            userService.addRoleToUser("usernameA", "ROLE_USER");
 
-            userService.addRoleToUser("nameB", "ROLE_USER");
-            userService.addRoleToUser("nameB", "ROLE_MANAGER");
+            userService.addRoleToUser("usernameB", "ROLE_USER");
+            userService.addRoleToUser("usernameB", "ROLE_MANAGER");
 
-            userService.addRoleToUser("nameC", "ROLE_MANAGER");
-            userService.addRoleToUser("nameC", "ROLE_ADMIN");
+            userService.addRoleToUser("usernameC", "ROLE_MANAGER");
+            userService.addRoleToUser("usernameC", "ROLE_ADMIN");
 
-            userService.addRoleToUser("nameD", "ROLE_USER");
-            userService.addRoleToUser("nameD", "ROLE_MANAGER");
-            userService.addRoleToUser("nameD", "ROLE_ADMIN");
-            userService.addRoleToUser("nameD", "ROLE_SUPER_ADMIN");
+            userService.addRoleToUser("usernameD", "ROLE_USER");
+            userService.addRoleToUser("usernameD", "ROLE_MANAGER");
+            userService.addRoleToUser("usernameD", "ROLE_ADMIN");
+            userService.addRoleToUser("usernameD", "ROLE_SUPER_ADMIN");
         };
     }
 }
