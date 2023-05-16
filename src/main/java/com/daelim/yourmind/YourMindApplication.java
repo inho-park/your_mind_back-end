@@ -25,13 +25,13 @@ public class YourMindApplication {
         SpringApplication.run(YourMindApplication.class, args);
     }
 
-    @Bean
+//    @Bean
     CommandLineRunner run(UserService userService) {
         return args -> {
             userService.saveRole(new Role(null, "ROLE_USER"));
             userService.saveRole(new Role(null, "ROLE_MANAGER"));
             userService.saveRole(new Role(null, "ROLE_ADMIN"));
-            userService.saveRole(new Role(null, "ROLE_SUPER_ADMIN"));
+            userService.saveRole(new Role(null, "ROLE_COUNSELOR"));
 
             userService.saveUser(new User(null, "nameA", "usernameA", "passwordA", "messageA", 1, true, new ArrayList<>()));
             userService.saveUser(new User(null, "nameB", "usernameB", "passwordB", "messageB", 2, true, new ArrayList<>()));
@@ -49,7 +49,7 @@ public class YourMindApplication {
             userService.addRoleToUser("usernameD", "ROLE_USER");
             userService.addRoleToUser("usernameD", "ROLE_MANAGER");
             userService.addRoleToUser("usernameD", "ROLE_ADMIN");
-            userService.addRoleToUser("usernameD", "ROLE_SUPER_ADMIN");
+            userService.addRoleToUser("usernameD", "ROLE_COUNSELOR");
         };
     }
 }

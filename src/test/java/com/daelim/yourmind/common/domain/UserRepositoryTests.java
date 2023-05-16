@@ -1,5 +1,6 @@
 package com.daelim.yourmind.common.domain;
 
+import com.daelim.yourmind.user.domain.Role;
 import com.daelim.yourmind.user.domain.User;
 import com.daelim.yourmind.user.domain.UserRepository;
 import org.junit.jupiter.api.Test;
@@ -9,7 +10,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.util.stream.IntStream;
 
 @SpringBootTest
-public class BooleanToYNConverterTests {
+public class UserRepositoryTests {
     @Autowired
     private UserRepository repository;
 
@@ -28,4 +29,6 @@ public class BooleanToYNConverterTests {
             repository.save(user);
         });
     }
+
+
 }

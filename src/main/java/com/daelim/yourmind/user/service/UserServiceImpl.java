@@ -54,6 +54,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
                 .password(passwordEncoder.encode(user.getPassword()))
                 .message(user.getMessage())
                 .age(user.getAge())
+                .isCounselor(user.isCounselor())
                 .roles(user.getRoles())
                 .build();
         return userRepository.save(user);
