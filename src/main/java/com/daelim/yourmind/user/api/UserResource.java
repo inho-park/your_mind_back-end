@@ -72,7 +72,7 @@ public class UserResource {
                 // local 에서 사용할 GrantType 으로 가정하여 Bearer 만 받음
                 String refresh_token = authorizationHeader.substring("Bearer ".length());
                 // token 을 생성할 때 사용한 알고리즘과 일치
-                Algorithm algorithm = Algorithm.HMAC256(SECRET_KEY.getBytes());
+                Algorithm algorithm = Algorithm.HMAC256("2iVQqPMvLUjBMKV5NmaCNqgOQsNdKST4YLTXxOXlbRY07vpmto".getBytes());
                 // 토큰 검증 객체를 생성한 후 알고리즘 주기
                 JWTVerifier verifier = JWT.require(algorithm).build();
                 // 토큰 검증 객체에서 검증된 복호화된 토큰 변수 지정

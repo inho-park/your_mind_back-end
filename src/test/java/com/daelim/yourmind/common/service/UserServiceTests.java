@@ -26,10 +26,16 @@ public class UserServiceTests {
 
     @Test
     public void 롤_추가() {
+        userService.saveRole(new Role(null, "ROLE_USER"));
+        userService.saveRole(new Role(null, "ROLE_COUNSELOR"));
+    }
+
+    @Test
+    public void 유저_롤_추가() {
         IntStream.rangeClosed(1, 10).forEach(i -> {
             User user = userService.getUser("username" + i);
             if (user.isCounselor()) userService.addRoleToUser("username" + i,"ROLE_COUNSELOR");
-            else userService.addRoleToUser("username" + i,"ROLE_USER");
+            userService.addRoleToUser("username" + i,"ROLE_USER");
         });
     }
 }

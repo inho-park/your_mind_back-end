@@ -36,6 +36,7 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
     public CustomAuthenticationFilter(AuthenticationManager authenticationManager){
         this.authenticationManager = authenticationManager;
     }
+
     // authentication 에 사용하기 위해 username 과 password 를 이용하여
     // UsernamePasswordAuthenticationToken 객체 생성
     // 로그인 실패시 AuthenticationException 전달
@@ -63,7 +64,7 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
         // 사용자 로그인 성공
         User user = (User)authentication.getPrincipal();
         // signature 에 담길 시크릿키와 알고리즘 설정
-        Algorithm algorithm = Algorithm.HMAC256(SECRET_KEY.getBytes());
+        Algorithm algorithm = Algorithm.HMAC256("2iVQqPMvLUjBMKV5NmaCNqgOQsNdKST4YLTXxOXlbRY07vpmto".getBytes());
 
         String access_token = JWT.create()
                 .withSubject(user.getUsername())
