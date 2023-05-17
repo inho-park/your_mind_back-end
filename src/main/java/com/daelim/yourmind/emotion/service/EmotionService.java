@@ -12,6 +12,7 @@ public interface EmotionService {
     Emotion saveEmotion(Emotion emotion);
     Emotion getEmotion(Long childId);
     PageResultDTO<EmotionDTO, Object[]> getEmotions(PageRequestDTO pageRequestDTO);
+    boolean isCounselor(String username);
 
     default Emotion dtoToEntity(EmotionDTO dto) {
         User child  = User.builder().username(dto.getChild()).build();

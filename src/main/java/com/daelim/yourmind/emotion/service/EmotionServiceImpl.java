@@ -6,6 +6,7 @@ import com.daelim.yourmind.emotion.dto.EmotionDTO;
 import com.daelim.yourmind.emotion.dto.PageRequestDTO;
 import com.daelim.yourmind.emotion.dto.PageResultDTO;
 import com.daelim.yourmind.user.domain.User;
+import com.daelim.yourmind.user.domain.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.Page;
@@ -21,6 +22,7 @@ import java.util.function.Function;
 public class EmotionServiceImpl implements EmotionService {
 
     private final EmotionRepository emotionRepository;
+    private final UserRepository userRepository;
 
     @Override
     public Emotion saveEmotion(Emotion emotion) {
@@ -47,4 +49,9 @@ public class EmotionServiceImpl implements EmotionService {
 
         return new PageResultDTO<>(result, fn);
     }
+
+    public boolean isCounselor(String username) {
+        User user = userRepository.findByUsername(username);
+        return user.isCounselor();
+    };
 }
