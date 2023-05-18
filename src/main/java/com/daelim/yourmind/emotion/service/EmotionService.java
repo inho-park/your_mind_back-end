@@ -9,8 +9,8 @@ import com.daelim.yourmind.user.domain.User;
 import java.util.List;
 
 public interface EmotionService {
-    Emotion saveEmotion(Emotion emotion);
-    Emotion getEmotion(Long childId);
+    Long saveEmotion(EmotionDTO emotionDTO);
+    EmotionDTO getEmotion(Long childId);
     PageResultDTO<EmotionDTO, Object[]> getEmotions(PageRequestDTO pageRequestDTO);
     boolean isCounselor(String username);
 
