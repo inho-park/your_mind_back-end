@@ -46,6 +46,10 @@ public class CustomAuthorizationFilter extends OncePerRequestFilter {
                     String username = decodedJWT.getSubject();
                     // String[] 로 받은 authority 들을 Collection<SimpleGrantAuthority> 객체에 담기
                     String[] roles = decodedJWT.getClaim("roles").asArray(String.class);
+
+                    // 권한 확인용 출력
+                    for (String role : roles) log.info(role);
+
                     Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
                     Arrays.stream(roles).forEach(role -> {
                         authorities.add(new SimpleGrantedAuthority(role));

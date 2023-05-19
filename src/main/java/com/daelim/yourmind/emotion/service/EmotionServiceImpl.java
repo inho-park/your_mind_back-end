@@ -5,6 +5,7 @@ import com.daelim.yourmind.emotion.domain.EmotionRepository;
 import com.daelim.yourmind.emotion.dto.EmotionDTO;
 import com.daelim.yourmind.emotion.dto.PageRequestDTO;
 import com.daelim.yourmind.emotion.dto.PageResultDTO;
+import com.daelim.yourmind.emotion.dto.ResponseIdDTO;
 import com.daelim.yourmind.user.domain.User;
 import com.daelim.yourmind.user.domain.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -26,7 +27,7 @@ public class EmotionServiceImpl implements EmotionService {
     private final UserRepository userRepository;
 
     @Override
-    public Long saveEmotion(EmotionDTO emotionDTO) {
+    public ResponseIdDTO saveEmotion(EmotionDTO emotionDTO) {
         User child = userRepository.findByUsername(emotionDTO.getChild());
         User counselor = userRepository.findByUsername(emotionDTO.getCounselor());
         Emotion emotion = Emotion.builder()
@@ -41,7 +42,8 @@ public class EmotionServiceImpl implements EmotionService {
                 .counselor(counselor)
                 .build();
 
-        return emotionRepository.save(emotion).getId();
+        ResponseIdDTO response = ResponseIdDTO.builder().id(emotionRepository.save(emotion).getId()).build();
+        return response;
     }
 
     @Override

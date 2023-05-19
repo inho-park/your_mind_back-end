@@ -4,12 +4,14 @@ import com.daelim.yourmind.emotion.domain.Emotion;
 import com.daelim.yourmind.emotion.dto.EmotionDTO;
 import com.daelim.yourmind.emotion.dto.PageRequestDTO;
 import com.daelim.yourmind.emotion.dto.PageResultDTO;
+import com.daelim.yourmind.emotion.dto.ResponseIdDTO;
 import com.daelim.yourmind.user.domain.User;
 
 import java.util.List;
 
+
 public interface EmotionService {
-    Long saveEmotion(EmotionDTO emotionDTO);
+    ResponseIdDTO saveEmotion(EmotionDTO emotionDTO);
     EmotionDTO getEmotion(Long childId);
     PageResultDTO<EmotionDTO, Object[]> getEmotions(PageRequestDTO pageRequestDTO);
     boolean isCounselor(String username);

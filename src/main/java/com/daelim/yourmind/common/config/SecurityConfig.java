@@ -54,7 +54,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 // 권한이나 인증 없이 permit 해줌
                 .antMatchers("/api/login/**", "/api/token/refresh/**").permitAll()
-                .antMatchers("/emotions/**").hasAnyAuthority()
+                .antMatchers(HttpMethod.POST, "/emotions/**").hasAuthority("ROLE_COUNSELOR")
                 .antMatchers(HttpMethod.GET, "/api/user/**").hasAuthority("ROLE_USER")
                 .antMatchers(HttpMethod.POST, "/api/user/save/**").hasAuthority("ROLE_ADMIN")
                 // 인증(authenticated)되야만 접근 가능 antMatchers 로 지정한 엔드포인트 외에

@@ -6,6 +6,7 @@ import com.daelim.yourmind.emotion.service.EmotionService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,13 +25,21 @@ public class EmotionResource {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
-    @PostMapping()
-    public ResponseEntity create(EmotionDTO dto) {
-        return new ResponseEntity<>(service.saveEmotion(dto), HttpStatus.OK);
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity create(@RequestBody EmotionDTO dto) {
+        try {
+            return new ResponseEntity<>(service.saveEmotion(dto), HttpStatus.OK);
+        } catch(Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
     }
     @GetMapping("/{id}")
     public ResponseEntity read(@PathVariable(value = "id") String id) {
-        return new ResponseEntity<>(service.getEmotion(Long.parseLong(id)), HttpStatus.OK);
+        try {
+            return new ResponseEntity<>(service.getEmotion(Long.parseLong(id)), HttpStatus.OK);
+        } catch(Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
     }
     @DeleteMapping("/{id}")
     public ResponseEntity delete(@PathVariable(value = "id") String id) {
