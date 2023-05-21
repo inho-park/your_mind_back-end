@@ -41,8 +41,12 @@ public class EmotionResource {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
-    @DeleteMapping("/{id}")
+    @DeleteMapping(value = "/{id}" , consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity delete(@PathVariable(value = "id") String id) {
-        return null;
+        try {
+            return new ResponseEntity<>(emotionService.deleteEmotion(Long.parseLong(id)), HttpStatus.OK);
+        } catch(Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
     }
 }

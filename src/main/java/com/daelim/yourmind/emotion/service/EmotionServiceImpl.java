@@ -2,10 +2,7 @@ package com.daelim.yourmind.emotion.service;
 
 import com.daelim.yourmind.emotion.domain.Emotion;
 import com.daelim.yourmind.emotion.domain.EmotionRepository;
-import com.daelim.yourmind.emotion.dto.EmotionDTO;
-import com.daelim.yourmind.emotion.dto.PageRequestDTO;
-import com.daelim.yourmind.emotion.dto.PageResultDTO;
-import com.daelim.yourmind.emotion.dto.ResponseIdDTO;
+import com.daelim.yourmind.emotion.dto.*;
 import com.daelim.yourmind.user.domain.User;
 import com.daelim.yourmind.user.domain.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -47,8 +44,8 @@ public class EmotionServiceImpl implements EmotionService {
     }
 
     @Override
-    public EmotionDTO getEmotion(Long id) {
-        Emotion emotion = emotionRepository.findById(id).get();
+    public EmotionDTO getEmotion(Long emotionId) {
+        Emotion emotion = emotionRepository.findById(emotionId).get();
         User child = emotion.getChild();
         User counselor = emotion.getCounselor();
         return entityToDTO(emotion, child, counselor);
@@ -77,6 +74,18 @@ public class EmotionServiceImpl implements EmotionService {
             );
         }
         return new PageResultDTO<>(result, fn);
+    }
+
+    @Override
+    public StatusDTO deleteEmotion(Long emotionId) {
+        StatusDTO statusDTO = null;
+        try {
+            emotionRepository.deleteById(emotionId);
+            statusDTO.setStatus("success");
+            return statusDTO;
+        } catch(Exception e) {
+            throw e;
+        }
     }
 
     public boolean isCounselor(String username) {
