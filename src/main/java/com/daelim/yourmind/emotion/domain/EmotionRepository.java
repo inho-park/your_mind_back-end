@@ -10,14 +10,14 @@ public interface EmotionRepository extends JpaRepository<Emotion, Long>{
     @Query(
             "SELECT e, e.counselor, e.child " +
             "FROM Emotion e " +
-            "WHERE e.counselor=:id"
+            "WHERE e.counselor.id=:id"
     )
     Page<Object[]> getEmotionAndChildAndCounselorByCounselor(Pageable pageable, @Param("id") Long id);
 
     @Query(
             "SELECT e, e.counselor, e.child " +
-                    "FROM Emotion e " +
-                    "WHERE e.child=:id"
+            "FROM Emotion e " +
+            "WHERE e.child.id=:id"
     )
     Page<Object[]> getEmotionAndChildAndCounselorByChild(Pageable pageable, @Param("id") Long id);
 

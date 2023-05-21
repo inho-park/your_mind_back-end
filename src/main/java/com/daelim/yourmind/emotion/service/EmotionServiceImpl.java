@@ -64,17 +64,16 @@ public class EmotionServiceImpl implements EmotionService {
                         (User)entity[2])
         );
         Page<Object[]> result;
-        if (isCounselor(pageRequestDTO.getUsername())) {
+        String username = pageRequestDTO.getUsername();
+        if (isCounselor(username)) {
             result = emotionRepository.getEmotionAndChildAndCounselorByCounselor(
                 pageRequestDTO.getPageable(Sort.by("id").descending()),
-                userRepository.findByUsername(pageRequestDTO.getUsername()).getId()
+                userRepository.findByUsername(username).getId()
             );
-        }
-
-        else {
+        } else {
             result = emotionRepository.getEmotionAndChildAndCounselorByChild(
                 pageRequestDTO.getPageable(Sort.by("id").descending()),
-                userRepository.findByUsername(pageRequestDTO.getUsername()).getId()
+                userRepository.findByUsername(username).getId()
             );
         }
         return new PageResultDTO<>(result, fn);
