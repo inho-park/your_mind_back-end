@@ -78,11 +78,10 @@ public class EmotionServiceImpl implements EmotionService {
 
     @Override
     public StatusDTO deleteEmotion(Long emotionId) {
-        StatusDTO statusDTO = null;
         try {
             emotionRepository.deleteById(emotionId);
-            statusDTO.setStatus("success");
-            return statusDTO;
+            StatusDTO dto = StatusDTO.builder().status("success").build();
+            return dto;
         } catch(Exception e) {
             throw e;
         }

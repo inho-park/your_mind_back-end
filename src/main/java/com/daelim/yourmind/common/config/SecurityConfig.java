@@ -3,6 +3,7 @@ package com.daelim.yourmind.common.config;
 import com.daelim.yourmind.user.filter.CustomAuthenticationFilter;
 import com.daelim.yourmind.user.filter.CustomAuthorizationFilter;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -22,6 +23,8 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final UserDetailsService userDetailsService;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    @Value("${SECRET_KEY}")
+    private String SECRET_KEY;
 
     // CustomFilter 에 사용할 AuthenticationManager 를 제공하기 위해 빈 생성
     @Bean
@@ -41,7 +44,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         // CustomAuthenticationFilter 가 상속받는 UsernamePasswordAuthenticationFilter 는
         // 기존에 로그인 처리 url 이 기본으로 잡혀있다
-        CustomAuthenticationFilter customAuthenticationFilter = new CustomAuthenticationFilter(authenticationManagerBean());
+        CustomAuthenticationFilter customAuthenticationFilter = new CustomAuthenticationFilter(authenticationManagerBean(), SECRET_KEY);
         // 위와 같은 이유로 아래 코드를 통해 내가 원하는 로그인 엔드포인트를 지정해줄 수 있다
         customAuthenticationFilter.setFilterProcessesUrl("/api/login");
         // csrf 금지

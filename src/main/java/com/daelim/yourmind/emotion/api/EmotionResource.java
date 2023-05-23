@@ -3,7 +3,6 @@ package com.daelim.yourmind.emotion.api;
 import com.daelim.yourmind.emotion.dto.EmotionDTO;
 import com.daelim.yourmind.emotion.dto.PageRequestDTO;
 import com.daelim.yourmind.emotion.service.EmotionService;
-import com.daelim.yourmind.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
@@ -22,6 +21,7 @@ public class EmotionResource {
         try {
             return new ResponseEntity<>(emotionService.getEmotions(pageRequestDTO), HttpStatus.OK);
         } catch(Exception e) {
+            e.printStackTrace();
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
@@ -30,6 +30,7 @@ public class EmotionResource {
         try {
             return new ResponseEntity<>(emotionService.saveEmotion(dto), HttpStatus.OK);
         } catch(Exception e) {
+            e.printStackTrace();
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
@@ -38,6 +39,7 @@ public class EmotionResource {
         try {
             return new ResponseEntity<>(emotionService.getEmotion(Long.parseLong(id)), HttpStatus.OK);
         } catch(Exception e) {
+            e.printStackTrace();
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
@@ -46,6 +48,7 @@ public class EmotionResource {
         try {
             return new ResponseEntity<>(emotionService.deleteEmotion(Long.parseLong(id)), HttpStatus.OK);
         } catch(Exception e) {
+            e.printStackTrace();
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }

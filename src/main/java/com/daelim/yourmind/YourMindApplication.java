@@ -14,13 +14,13 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import java.util.ArrayList;
 
 @EnableJpaAuditing
-
 @SpringBootApplication
 public class YourMindApplication {
     @Bean
     PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
     public static void main(String[] args) {
         SpringApplication.run(YourMindApplication.class, args);
     }

@@ -21,4 +21,5 @@ public interface EmotionRepository extends JpaRepository<Emotion, Long>{
     )
     Page<Object[]> getEmotionAndChildAndCounselorByChild(Pageable pageable, @Param("id") Long id);
 
+
 }
