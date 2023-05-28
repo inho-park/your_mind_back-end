@@ -24,23 +24,27 @@ public class EmotionServiceImpl implements EmotionService {
     private final UserRepository userRepository;
 
     @Override
-    public ResponseIdDTO saveEmotion(EmotionDTO emotionDTO) {
-        User child = userRepository.findByUsername(emotionDTO.getChild());
-        User counselor = userRepository.findByUsername(emotionDTO.getCounselor());
-        Emotion emotion = Emotion.builder()
-                .happy(emotionDTO.getHappy())
-                .fearful(emotionDTO.getFearful())
-                .disgusted(emotionDTO.getDisgusted())
-                .angry(emotionDTO.getAngry())
-                .neutral(emotionDTO.getNeutral())
-                .sad(emotionDTO.getSad())
-                .surprised(emotionDTO.getSurprised())
-                .child(child)
-                .counselor(counselor)
-                .build();
-
-        ResponseIdDTO response = ResponseIdDTO.builder().id(emotionRepository.save(emotion).getId()).build();
-        return response;
+    public StatusDTO saveEmotion(EmotionDTO emotionDTO) {
+        try {
+            User child = userRepository.findByUsername(emotionDTO.getChild());
+            User counselor = userRepository.findByUsername(emotionDTO.getCounselor());
+            Emotion emotion = Emotion.builder()
+                    .happy(emotionDTO.getHappy())
+                    .fearful(emotionDTO.getFearful())
+                    .disgusted(emotionDTO.getDisgusted())
+                    .angry(emotionDTO.getAngry())
+                    .neutral(emotionDTO.getNeutral())
+                    .sad(emotionDTO.getSad())
+                    .surprised(emotionDTO.getSurprised())
+                    .child(child)
+                    .counselor(counselor)
+                    .build();
+            emotionRepository.save(emotion).getId();
+            StatusDTO statusDTO = StatusDTO.builder().status("success").build();
+            return statusDTO;
+        } catch(Exception e) {
+            throw e;
+        }
     }
 
     @Override

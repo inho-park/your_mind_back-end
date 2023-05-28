@@ -65,7 +65,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         // filter 로 dispatcher servlet 에 접근하기 전에 먼저 authenticationManager 객체로 검사
         http.addFilter(customAuthenticationFilter);
         // 다른 필터보다 요청을 먼저 가로챔
-        http.addFilterBefore(new CustomAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);
+        http.addFilterBefore(new CustomAuthorizationFilter(SECRET_KEY), UsernamePasswordAuthenticationFilter.class);
     }
 
 }

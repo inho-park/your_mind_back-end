@@ -21,7 +21,7 @@ public class EmotionResource {
         try {
             return new ResponseEntity<>(emotionService.getEmotions(pageRequestDTO), HttpStatus.OK);
         } catch(Exception e) {
-            e.printStackTrace();
+//            e.printStackTrace();
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
@@ -30,7 +30,7 @@ public class EmotionResource {
         try {
             return new ResponseEntity<>(emotionService.saveEmotion(dto), HttpStatus.OK);
         } catch(Exception e) {
-            e.printStackTrace();
+//            e.printStackTrace();
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
@@ -39,7 +39,7 @@ public class EmotionResource {
         try {
             return new ResponseEntity<>(emotionService.getEmotion(Long.parseLong(id)), HttpStatus.OK);
         } catch(Exception e) {
-            e.printStackTrace();
+//            e.printStackTrace();
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
@@ -48,7 +48,7 @@ public class EmotionResource {
         try {
             return new ResponseEntity<>(emotionService.deleteEmotion(Long.parseLong(id)), HttpStatus.OK);
         } catch(Exception e) {
-            e.printStackTrace();
+//            e.printStackTrace();
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }

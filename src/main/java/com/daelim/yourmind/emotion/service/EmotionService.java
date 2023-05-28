@@ -8,7 +8,7 @@ import java.util.List;
 
 
 public interface EmotionService {
-    ResponseIdDTO saveEmotion(EmotionDTO emotionDTO);
+    StatusDTO saveEmotion(EmotionDTO emotionDTO);
     EmotionDTO getEmotion(Long emotionId);
     PageResultDTO<EmotionDTO, Object[]> getEmotions(PageRequestDTO pageRequestDTO);
     StatusDTO deleteEmotion(Long emotionId);
