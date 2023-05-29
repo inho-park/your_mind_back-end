@@ -12,6 +12,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Objects;
 import java.util.function.Function;
 
 
@@ -48,11 +49,15 @@ public class EmotionServiceImpl implements EmotionService {
     }
 
     @Override
-    public EmotionDTO getEmotion(Long emotionId) {
+    public EmotionDTO getEmotion(Long emotionId, String username) {
         Emotion emotion = emotionRepository.findById(emotionId).get();
-        User child = emotion.getChild();
-        User counselor = emotion.getCounselor();
-        return entityToDTO(emotion, child, counselor);
+        if (emotion.getChild().getUsername().equals(username) || emotion.getCounselor().getUsername().equals(username)) {
+            User child = emotion.getChild();
+            User counselor = emotion.getCounselor();
+            return entityToDTO(emotion, child, counselor);
+        } else {
+            throw new RuntimeException("No permission");
+        }
     }
 
     @Override
@@ -66,28 +71,33 @@ public class EmotionServiceImpl implements EmotionService {
         );
         Page<Object[]> result;
         String username = pageRequestDTO.getUsername();
-        if (isCounselor(username)) {
-            result = emotionRepository.getEmotionAndChildAndCounselorByCounselor(
-                pageRequestDTO.getPageable(Sort.by("id").descending()),
-                userRepository.findByUsername(username).getId()
-            );
+        if (userRepository.existsByUsername(username)) {
+            if (isCounselor(username)) {
+                result = emotionRepository.getEmotionAndChildAndCounselorByCounselor(
+                    pageRequestDTO.getPageable(Sort.by("id").descending()),
+                    userRepository.findByUsername(username).getId()
+                );
+            } else {
+                result = emotionRepository.getEmotionAndChildAndCounselorByChild(
+                    pageRequestDTO.getPageable(Sort.by("id").descending()),
+                    userRepository.findByUsername(username).getId()
+                );
+            }
+            return new PageResultDTO<>(result, fn);
         } else {
-            result = emotionRepository.getEmotionAndChildAndCounselorByChild(
-                pageRequestDTO.getPageable(Sort.by("id").descending()),
-                userRepository.findByUsername(username).getId()
-            );
+            throw new RuntimeException("No permission");
         }
-        return new PageResultDTO<>(result, fn);
     }
 
     @Override
-    public StatusDTO deleteEmotion(Long emotionId) {
-        try {
+    public StatusDTO deleteEmotion(Long emotionId, String username) {
+        Emotion emotion = emotionRepository.findById(emotionId).get();
+        if (emotion.getChild().getUsername().equals(username) || emotion.getCounselor().getUsername().equals(username)) {
             emotionRepository.deleteById(emotionId);
             StatusDTO dto = StatusDTO.builder().status("success").build();
             return dto;
-        } catch(Exception e) {
-            throw e;
+        } else {
+            throw new RuntimeException("No permission");
         }
     }
 
@@ -95,4 +105,5 @@ public class EmotionServiceImpl implements EmotionService {
         User user = userRepository.findByUsername(username);
         return user.isCounselor();
     };
+
 }

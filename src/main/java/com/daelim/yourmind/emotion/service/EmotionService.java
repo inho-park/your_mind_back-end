@@ -9,9 +9,9 @@ import java.util.List;
 
 public interface EmotionService {
     StatusDTO saveEmotion(EmotionDTO emotionDTO);
-    EmotionDTO getEmotion(Long emotionId);
+    EmotionDTO getEmotion(Long emotionId, String username);
     PageResultDTO<EmotionDTO, Object[]> getEmotions(PageRequestDTO pageRequestDTO);
-    StatusDTO deleteEmotion(Long emotionId);
+    StatusDTO deleteEmotion(Long emotionId, String username);
     boolean isCounselor(String username);
 
     default Emotion dtoToEntity(EmotionDTO dto) {
