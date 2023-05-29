@@ -14,9 +14,7 @@ public interface EmotionService {
     StatusDTO deleteEmotion(Long emotionId, String username);
     boolean isCounselor(String username);
 
-    default Emotion dtoToEntity(EmotionDTO dto) {
-        User child  = User.builder().username(dto.getChild()).build();
-        User counselor = User.builder().username(dto.getCounselor()).build();
+    default Emotion dtoToEntity(EmotionDTO dto, User child, User counselor) {
         Emotion emotion = Emotion.builder()
                 .id(dto.getId())
                 .angry(dto.getAngry())
