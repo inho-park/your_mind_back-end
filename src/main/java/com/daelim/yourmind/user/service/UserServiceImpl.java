@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 
 @Log4j2
 @Service
@@ -29,12 +30,15 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findByUsername(username);
-        if (user == null) {
+        Optional<User> userOptional = userRepository.findByUsername(username);
+        User user;
+        if (userOptional.isPresent()) {
+            user = userOptional.get();
+            log.info("username : {} ", username);
+        }
+        else {
             log.error("User not found in the DB");
             throw new UsernameNotFoundException("User not found in the DB");
-        } else {
-            log.info("username : {} ", username);
         }
         Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
         user.getRoles().forEach(role -> authorities.add(new SimpleGrantedAuthority(role.getName())));
@@ -67,7 +71,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Override
     public void addRoleToUser(String username, String roleName) {
-        User user = userRepository.findByUsername(username);
+        User user = userRepository.findByUsername(username).get();
         log.info("to user {}", username);
         Role role = roleRepository.findByName(roleName);
         log.info("Adding role {}", roleName);
@@ -77,7 +81,12 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Override
     public User getUser(String username) {
-        return userRepository.findByUsername(username);
+        Optional<User> userOptional = userRepository.findByUsername(username);
+        if (userOptional.isPresent()) {
+            return userOptional.get();
+        } else {
+            throw new UsernameNotFoundException("User not found in the DB");
+        }
     }
 
     @Override
