@@ -26,12 +26,16 @@ import java.util.stream.Collectors;
 
 @Log4j2
 public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
+
+    private static String SECRET_KEY;
     private final AuthenticationManager authenticationManager;
 
     // authentication 을 하기 위한 관리자객체 생성
-    public CustomAuthenticationFilter(AuthenticationManager authenticationManager){
+    public CustomAuthenticationFilter(AuthenticationManager authenticationManager, String secret_key){
         this.authenticationManager = authenticationManager;
+        SECRET_KEY = secret_key;
     }
+
     // authentication 에 사용하기 위해 username 과 password 를 이용하여
     // UsernamePasswordAuthenticationToken 객체 생성
     // 로그인 실패시 AuthenticationException 전달
@@ -59,7 +63,7 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
         // 사용자 로그인 성공
         User user = (User)authentication.getPrincipal();
         // signature 에 담길 시크릿키와 알고리즘 설정
-        Algorithm algorithm = Algorithm.HMAC256("secret".getBytes());
+        Algorithm algorithm = Algorithm.HMAC256(SECRET_KEY.getBytes());
 
         String access_token = JWT.create()
                 .withSubject(user.getUsername())

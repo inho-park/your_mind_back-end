@@ -54,7 +54,6 @@ public class UserResource {
 
     @PostMapping("/role/save")
     public ResponseEntity<Role> saveUser(@RequestBody Role role) {
-        URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/role/save").toUriString());
         return ResponseEntity.ok().body(userService.saveRole(role));
     }
 

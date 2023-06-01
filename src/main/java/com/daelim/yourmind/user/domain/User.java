@@ -24,7 +24,7 @@ public class User extends BaseTimeEntity {
     @Column(nullable = false)
     private String name;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String username;
 
     @Column(nullable = false)
@@ -36,7 +36,7 @@ public class User extends BaseTimeEntity {
     @Column
     private int age;
 
-    @Column
+    @Column(length = 1)
     @Convert(converter = BooleanToYNConverter.class)
     private boolean isCounselor;
 

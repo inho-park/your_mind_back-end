@@ -1,8 +1,9 @@
-package com.daelim.yourmind.user.config;
+package com.daelim.yourmind.common.config;
 
 import com.daelim.yourmind.user.filter.CustomAuthenticationFilter;
 import com.daelim.yourmind.user.filter.CustomAuthorizationFilter;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -22,6 +23,8 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final UserDetailsService userDetailsService;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    @Value("${SECRET_KEY}")
+    private String SECRET_KEY;
 
     // CustomFilter 에 사용할 AuthenticationManager 를 제공하기 위해 빈 생성
     @Bean
@@ -41,7 +44,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         // CustomAuthenticationFilter 가 상속받는 UsernamePasswordAuthenticationFilter 는
         // 기존에 로그인 처리 url 이 기본으로 잡혀있다
-        CustomAuthenticationFilter customAuthenticationFilter = new CustomAuthenticationFilter(authenticationManagerBean());
+        CustomAuthenticationFilter customAuthenticationFilter = new CustomAuthenticationFilter(authenticationManagerBean(), SECRET_KEY);
         // 위와 같은 이유로 아래 코드를 통해 내가 원하는 로그인 엔드포인트를 지정해줄 수 있다
         customAuthenticationFilter.setFilterProcessesUrl("/api/login");
         // csrf 금지
@@ -54,6 +57,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 // 권한이나 인증 없이 permit 해줌
                 .antMatchers("/api/login/**", "/api/token/refresh/**").permitAll()
+                .antMatchers(HttpMethod.POST, "/emotions/**").hasAuthority("ROLE_COUNSELOR")
                 .antMatchers(HttpMethod.GET, "/api/user/**").hasAuthority("ROLE_USER")
                 .antMatchers(HttpMethod.POST, "/api/user/save/**").hasAuthority("ROLE_ADMIN")
                 // 인증(authenticated)되야만 접근 가능 antMatchers 로 지정한 엔드포인트 외에
@@ -61,7 +65,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         // filter 로 dispatcher servlet 에 접근하기 전에 먼저 authenticationManager 객체로 검사
         http.addFilter(customAuthenticationFilter);
         // 다른 필터보다 요청을 먼저 가로챔
-        http.addFilterBefore(new CustomAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);
+        http.addFilterBefore(new CustomAuthorizationFilter(SECRET_KEY), UsernamePasswordAuthenticationFilter.class);
     }
 
 }

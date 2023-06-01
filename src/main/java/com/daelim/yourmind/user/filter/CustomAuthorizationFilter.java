@@ -6,6 +6,7 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -23,6 +24,10 @@ import java.util.*;
 
 @Log4j2
 public class CustomAuthorizationFilter extends OncePerRequestFilter {
+    private String SECRET_KEY;
+    public CustomAuthorizationFilter(String SECRET_KEY) {
+        this.SECRET_KEY = SECRET_KEY;
+    }
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         if (request.getServletPath().equals("/api/login") || request.getServletPath().equals("/api/token/refresh")) {
@@ -34,7 +39,8 @@ public class CustomAuthorizationFilter extends OncePerRequestFilter {
                     // local 에서 사용할 GrantType 으로 가정하여 Bearer 만 받음
                     String token = authorizationHeader.substring("Bearer ".length());
                     // token 을 생성할 때 사용한 알고리즘과 일치
-                    Algorithm algorithm = Algorithm.HMAC256("secret".getBytes());
+                    log.info("SECRET_KEY : " + SECRET_KEY);
+                    Algorithm algorithm = Algorithm.HMAC256(SECRET_KEY.getBytes());
                     // 토큰 검증 객체를 생성한 후 알고리즘 주기
                     JWTVerifier verifier = JWT.require(algorithm).build();
                     // 토큰 검증 객체에서 검증된 복호화된 토큰 변수 지정
@@ -43,6 +49,10 @@ public class CustomAuthorizationFilter extends OncePerRequestFilter {
                     String username = decodedJWT.getSubject();
                     // String[] 로 받은 authority 들을 Collection<SimpleGrantAuthority> 객체에 담기
                     String[] roles = decodedJWT.getClaim("roles").asArray(String.class);
+
+                    // 권한 확인용 출력
+                    for (String role : roles) log.info(role);
+
                     Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
                     Arrays.stream(roles).forEach(role -> {
                         authorities.add(new SimpleGrantedAuthority(role));

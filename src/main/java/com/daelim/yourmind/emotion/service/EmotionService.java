@@ -1,21 +1,20 @@
 package com.daelim.yourmind.emotion.service;
 
 import com.daelim.yourmind.emotion.domain.Emotion;
-import com.daelim.yourmind.emotion.dto.EmotionDTO;
-import com.daelim.yourmind.emotion.dto.PageRequestDTO;
-import com.daelim.yourmind.emotion.dto.PageResultDTO;
+import com.daelim.yourmind.emotion.dto.*;
 import com.daelim.yourmind.user.domain.User;
 
 import java.util.List;
 
-public interface EmotionService {
-    Emotion saveEmotion(Emotion emotion);
-    Emotion getEmotion(Long childId);
-    PageResultDTO<EmotionDTO, Object[]> getEmotions(PageRequestDTO pageRequestDTO);
 
-    default Emotion dtoToEntity(EmotionDTO dto) {
-        User child  = User.builder().username(dto.getChild()).build();
-        User counselor = User.builder().username(dto.getCounselor()).build();
+public interface EmotionService {
+    StatusDTO saveEmotion(EmotionDTO emotionDTO);
+    EmotionDTO getEmotion(Long emotionId, String username);
+    PageResultDTO<EmotionDTO, Object[]> getEmotions(PageRequestDTO pageRequestDTO);
+    StatusDTO deleteEmotion(Long emotionId, String username);
+    boolean isCounselor(String username);
+
+    default Emotion dtoToEntity(EmotionDTO dto, User child, User counselor) {
         Emotion emotion = Emotion.builder()
                 .id(dto.getId())
                 .angry(dto.getAngry())
