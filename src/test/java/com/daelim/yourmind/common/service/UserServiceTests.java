@@ -19,8 +19,24 @@ public class UserServiceTests {
     @Test
     public void 유저_추가() {
         IntStream.rangeClosed(1, 10).forEach(i -> {
-            if (i%2==0) userService.saveUser(new User(null, "name" + i, "username" + i, "password" + i, "message" + i, i, true, new ArrayList<>()));
-            else userService.saveUser(new User(null, "name" + i, "username" + i, "password" + i, "message" + i, i, false, new ArrayList<>()));
+            if (i%2==0) userService.saveUser(new User(
+                    null,
+                    "name" + i,
+                    "username" + i,
+                    "password" + i,
+                    "message" + i,
+                    i,
+                    true,
+                    new ArrayList<>()));
+            else userService.saveUser(new User(
+                    null,
+                    "name" + i,
+                    "username" + i,
+                    "password" + i,
+                    "message" + i,
+                    i,
+                    false,
+                    new ArrayList<>()));
         });
     }
 

@@ -1,5 +1,6 @@
-package com.daelim.yourmind.emotion.domain;
+package com.daelim.yourmind.emotion.repo;
 
+import com.daelim.yourmind.emotion.domain.Emotion;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;

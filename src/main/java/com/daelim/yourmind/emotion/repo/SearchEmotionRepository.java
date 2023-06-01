@@ -1,4 +1,4 @@
-package com.daelim.yourmind.emotion.domain;
+package com.daelim.yourmind.emotion.repo;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

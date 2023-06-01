@@ -1,7 +1,7 @@
 package com.daelim.yourmind.emotion.service;
 
 import com.daelim.yourmind.emotion.domain.Emotion;
-import com.daelim.yourmind.emotion.domain.EmotionRepository;
+import com.daelim.yourmind.emotion.repo.EmotionRepository;
 import com.daelim.yourmind.emotion.dto.*;
 import com.daelim.yourmind.user.domain.User;
 import com.daelim.yourmind.user.domain.UserRepository;
@@ -10,9 +10,7 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Function;
 
