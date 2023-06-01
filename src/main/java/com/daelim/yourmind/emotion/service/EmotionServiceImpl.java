@@ -10,6 +10,7 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 import java.util.function.Function;
@@ -44,6 +45,7 @@ public class EmotionServiceImpl implements EmotionService {
         }
     }
 
+    @Transactional
     @Override
     public EmotionDTO getEmotion(Long emotionId, String username) {
         Optional<Emotion> emotionOption = emotionRepository.findById(emotionId);

@@ -1,12 +1,9 @@
 package com.daelim.yourmind.emotion.repo;
 
 import com.daelim.yourmind.emotion.domain.Emotion;
-import com.daelim.yourmind.emotion.domain.Memo;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-
-import java.util.stream.IntStream;
 
 @SpringBootTest
 public class MemoRepositoryTests {

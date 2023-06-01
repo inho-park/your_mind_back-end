@@ -17,4 +17,5 @@ public class EmotionDTO {
     private String child;
     private String counselor;
     private LocalDateTime regDate,modDate;
+    private String memo;
 }

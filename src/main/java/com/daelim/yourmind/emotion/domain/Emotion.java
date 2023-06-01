@@ -41,6 +41,9 @@ public class Emotion extends BaseTimeEntity {
     @Column(nullable = false)
     private Long surprised;
 
+    @Column(length = 1500)
+    private String memo;
+
     @ManyToOne(fetch = FetchType.LAZY)
     private User child;
 

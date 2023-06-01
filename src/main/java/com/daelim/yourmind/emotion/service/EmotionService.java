@@ -4,8 +4,6 @@ import com.daelim.yourmind.emotion.domain.Emotion;
 import com.daelim.yourmind.emotion.dto.*;
 import com.daelim.yourmind.user.domain.User;
 
-import java.util.List;
-
 
 public interface EmotionService {
     StatusDTO saveEmotion(EmotionDTO emotionDTO);
@@ -24,6 +22,7 @@ public interface EmotionService {
                 .neutral(dto.getNeutral())
                 .surprised(dto.getSurprised())
                 .sad(dto.getSad())
+                .memo(dto.getMemo())
                 .child(child)
                 .counselor(counselor)
                 .build();
@@ -40,6 +39,7 @@ public interface EmotionService {
                 .disgusted(emotion.getDisgusted())
                 .surprised(emotion.getSurprised())
                 .happy(emotion.getHappy())
+                .memo(emotion.getMemo())
                 .regDate(emotion.getRegDate())
                 .modDate(emotion.getModDate())
                 .child(child.getUsername())
